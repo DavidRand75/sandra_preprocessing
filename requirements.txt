@@ -1,0 +1,7 @@
+setuptools~=69.5.1
+numpy~=1.26.4
+pandas~=2.2.2
+matplotlib~=3.8.4
+scipy~=1.13.1
+pydub~=0.25.1
+seaborn~=0.13.2
