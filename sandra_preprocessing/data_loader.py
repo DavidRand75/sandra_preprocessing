@@ -1,6 +1,6 @@
 import os
 from glob import glob
-from audio_processing import AudioProcessor
+from .audio_processing import AudioProcessor
 
 
 class DataLoader:

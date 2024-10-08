@@ -92,7 +92,8 @@ class Plotter:
 
         # Plot the line graphs in the second subplot (ax2)
         ax1_1 = ax1.twinx()  # Second y-axis
-        sns.lineplot(ax=ax1, data=audio_df, x='time', y='wavelet')
+        # sns.lineplot(ax=ax1, data=audio_df, x='time', y='raw_data', color='black')
+        sns.lineplot(ax=ax1, data=audio_df, x='time', y='wavelet', color='blue')
         sns.lineplot(ax=ax1_1, data=audio_df, x='time', y='Respiration', color='black', label='Respiration')
         sns.lineplot(ax=ax1_1, data=audio_df, x='Respiration_time', y='Respiration', color='red',
                      label='Respiration (shifted)').set(title=title)

@@ -4,7 +4,7 @@ from pydub import AudioSegment
 from scipy import signal
 import librosa
 import os
-from signal_processing import SignalProcessor, wavelet_denoising
+from .signal_processing import SignalProcessor, wavelet_denoising
 
 
 class AudioProcessor:
