@@ -1,6 +1,5 @@
-from data_loader import DataLoader
-from plots import Plotter
-import os
+from sandra_preprocessing.data_loader import DataLoader
+from sandra_preprocessing.plots import Plotter
 from itertools import product
 
 # Set up your parameters
