@@ -37,5 +37,5 @@ for distance, resp, subject in product(distances, resps, subjects):
                           vmin=None,
                           vmax=None,
                           show_fig=True)
-    
+
 
