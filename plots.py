@@ -85,7 +85,7 @@ class Plotter:
 
         return sxx, freqs, bins, im
 
-    def audio_fig(self, audio_df, process_stage, title, save_path, nfft=1024, vmin=None, vmax=None, save=False):
+    def audio_fig(self, audio_df, process_stage, title, nfft=1024, vmin=None, vmax=None, save_path=None, show_fig=False):
         # Create a figure with two horizontal subplots (1 row, 2 columns)
         audio_sig = audio_df[process_stage]
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8), sharex=True)
@@ -141,12 +141,16 @@ class Plotter:
 
         # Adjust layout
         plt.tight_layout()
-
+        if save_path:
+            figures_dir = os.path.join(save_path, 'figures')
+            os.makedirs(figures_dir, exist_ok=True)
+            save_dir = os.path.join(figures_dir, title + '_lineplot_spectrogram.jpg')
+            fig.savefig(save_dir)
+            print(f'Figure saved to: {save_dir}')
         # Show the combined plot
-        plt.show()
+        if show_fig:
+            plt.show()
 
         # Save the figure if requested
-        if save:
-            fig.savefig(os.path.join(save_path, title + '_combined_spectrogram_lineplot.jpg'))
 
         return sxx, freqs, bins, im

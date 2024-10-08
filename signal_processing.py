@@ -22,6 +22,8 @@ class SignalProcessor:
 
     def bandpass_filter(self, df, lowcut, highcut, order, notch=False, notch_freq=50, q=120, plot=False, xmax=None):
         nyquist_freq = 0.5 * self.fs
+        low = lowcut / nyquist_freq
+        high = highcut / nyquist_freq
         if isinstance(df, pd.Series):
             df = df.to_frame()
 
@@ -32,7 +34,7 @@ class SignalProcessor:
             raise ValueError("Lowcut and highcut frequencies must be between 0 and Nyquist frequency.")
 
         # Design bandpass filter using second-order sections
-        sos = butter(order, [lowcut, highcut], btype='band', output='sos')
+        sos = butter(order, [low, high], btype='band', output='sos')
 
         # Apply bandpass filter using sosfiltfilt for better numerical stability
         df_filt = pd.DataFrame()

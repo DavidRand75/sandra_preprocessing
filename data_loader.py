@@ -1,27 +1,26 @@
 import os
 from glob import glob
-from .audio_processing import AudioProcessor
+from audio_processing import AudioProcessor
 
 
 class DataLoader:
-    def __init__(self, fs, mounted_path, data_path):
+    def __init__(self, fs, folder_path):
         self.fs = fs
-        self.mounted_path = mounted_path
-        self.data_path = data_path
+        self.folder_path = folder_path
         self.audio_processor = AudioProcessor(fs)
 
-    def create_audio_dict(self, subjects, distances, resps):
+    def create_audio_dict(self, subjects, distances, resps, sampling_f, file_path):
         audio_dict = {}
         sampling_rate = self.fs
         for subject in subjects:
-            folders = os.listdir(os.path.join(self.mounted_path, self.data_path, subject))
+            folders = os.listdir(os.path.join(self.folder_path, subject))
             audio_dict[subject] = {}
 
             for distance in distances:
                 audio_dict[subject][distance] = {}
                 folder = folders[[i for i in range(len(folders)) if '(' + str(distance) + 'cm)' in folders[i]][0]]
-                audio_files = glob(os.path.join(self.mounted_path, self.data_path, subject, folder, '*cm.m*'))
-                respiration_files = glob(os.path.join(self.mounted_path, self.data_path, subject, folder, '*.csv'))
+                audio_files = glob(os.path.join(self.folder_path, subject, folder, '*cm.m*'))
+                respiration_files = glob(os.path.join(self.folder_path, subject, folder, '*.csv'))
 
                 for resp in resps:
                     audio_dict[subject][distance][resp] = {}
@@ -40,9 +39,14 @@ class DataLoader:
                         except IndexError:
                             print(f"Respiration file for {resp} not found for {subject} at {distance} cm.")
                             rf = None  # Set to None if respiration file is not found
-
+                        af_name = af.split('\\')[-1]
+                        rf_name = rf.split('\\')[-1]
+                        # print(af)
+                        print(f'processing: {subject} | {distance} | {resp}: {af_name}, {rf_name}')
                         # Create audio DataFrame using AudioProcessor class
-                        audio_data, sampling_rate = self.audio_processor.create_audio_dataframe(af, rf)
+                        audio_data, sampling_rate = self.audio_processor.create_audio_dataframe(af, rf,
+                                                                                                file_path=file_path,
+                                                                                                target_sampling_rate=sampling_f)
 
                         # Shift respiration using AudioProcessor's respiration_shift method
                         if rf:

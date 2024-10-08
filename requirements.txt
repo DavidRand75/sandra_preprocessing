@@ -5,3 +5,5 @@ matplotlib~=3.8.4
 scipy~=1.13.1
 pydub~=0.25.1
 seaborn~=0.13.2
+pywavelets~=1.7.0
+librosa
