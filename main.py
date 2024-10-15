@@ -22,14 +22,14 @@ distances = [2.5]
 resps = ['deep']
 
 # Create the audio dictionary
-audio_dict, _ = data_loader.create_audio_dict(subjects, distances, resps, fs, data_path)
+audio_dict, _ = data_loader.create_audio_dict(subjects, distances, resps, fs, file_path=None)
 
 for distance, resp, subject in product(distances, resps, subjects):
     audio_df = audio_dict[subject][distance][resp][1000:]
     Title = f'{subject} {str(distance)} cm {resp}'
 
     x = plotter.audio_fig(audio_df,
-                          process_stage='filtered',
+                          process_stage='raw_data',
                           title=Title,
                           save_path=data_path,
                           nfft=1024,
