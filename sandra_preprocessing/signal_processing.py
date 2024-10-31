@@ -1,8 +1,9 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 import pywt
 from scipy.signal import butter, sosfiltfilt, tf2sos, iirnotch, sosfreqz
+import noisereduce as nr
 
 
 def wavelet_denoising(signal, threshold, wavelet='db4', level=None):
